@@ -2,7 +2,7 @@
 
 - Registration of a new user
 - Logging into existing user
-- Creating new shopping lists for current user,
+- Creating new shopping lists for current user
 - Modifying and removing existing lists
 - Adding, removing, editing products
 - Changing status of products in lists
