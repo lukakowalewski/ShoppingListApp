@@ -9,7 +9,7 @@
 
 
 ## Demo
-- [Herokuapp Demo](https://shoping-list-app.herokuapp.com)
+- [Herokuapp Demo](https://lukasz-shopping-list-app.herokuapp.com)
 
 ## Tech stack
 
