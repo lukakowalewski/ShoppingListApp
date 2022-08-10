@@ -21,4 +21,6 @@ public class ProductList {
     @OrderBy("IS_BOUGHT, PRODUCT_NAME")
     private List<Product> productList = new ArrayList<>();
 
+    private Integer userId;
+
 }

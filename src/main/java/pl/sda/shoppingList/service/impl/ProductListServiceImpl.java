@@ -1,9 +1,7 @@
 package pl.sda.shoppingList.service.impl;
 
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import pl.sda.shoppingList.dto.ProductListDTO;
-import pl.sda.shoppingList.model.Product;
 import pl.sda.shoppingList.model.ProductList;
 import pl.sda.shoppingList.repository.ProductListRepository;
 import pl.sda.shoppingList.service.ProductListService;
@@ -15,13 +13,16 @@ public class ProductListServiceImpl implements ProductListService {
 
     private final ProductListRepository productListRepository;
 
+
     public ProductListServiceImpl(ProductListRepository productListRepository) {
         this.productListRepository = productListRepository;
+
     }
 
     @Override
-    public void add(ProductListDTO productListDTO) {
+    public void add(ProductListDTO productListDTO, Integer userId) {
         ProductList productList = new ProductList();
+        productList.setUserId(userId);
         productList.setName(productListDTO.getName());
         productListRepository.save(productList);
     }
@@ -45,6 +46,11 @@ public class ProductListServiceImpl implements ProductListService {
     @Override
     public ProductList getProductListById(Integer id) {
         return productListRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public List<ProductList> findProductListsByUserId(Integer userId) {
+        return productListRepository.findProductListsByUserId(userId);
     }
 
 

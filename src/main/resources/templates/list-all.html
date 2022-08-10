@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="UTF-8">
     <title>Shopping lists</title>
@@ -8,17 +8,18 @@
 </head>
 <body>
 <div class="container-sm text-center">
+    <a class="text-end" th:href="@{/logout}">Logout</a>
     <h1>Shopping lists! <i class="bi bi-card-checklist"></i></h1>
     <ul class="list-inline">
         <li th:each="list : ${lists}">
             <p>
-            <a th:href="@{/list/{id}/(id=${list.id})}" th:text="${list.name}"  class="btn btn-primary btn-lg fw-bolder"/>
-            <a th:href="@{/list/edit/{id}(id=${list.id})}" class="btn btn-outline-warning btn-sm" ><i class="bi bi-pencil-fill"></i> Edit list</a>
-            <a th:href="@{/list/delete/{id}(id=${list.id})}" class="btn btn-outline-danger btn-sm"><i class="bi bi-trash"></i> Remove list</a>
+            <a th:href="@{/user/__${userId}__/lists/__${list.id}__}" th:text="${list.name}"  class="btn btn-primary btn-lg fw-bolder"/>
+            <a th:href="@{/user/__${userId}__/lists/edit/__${list.id}__}" class="btn btn-outline-warning btn-sm" ><i class="bi bi-pencil-fill"></i> Edit list</a>
+            <a th:href="@{/user/__${userId}__/lists/delete/__${list.id}__}" class="btn btn-outline-danger btn-sm"><i class="bi bi-trash"></i> Remove list</a>
             </p>
         </li>
     </ul>
-<a th:href="@{/list/add}" class="btn btn-outline-success"><i class="bi bi-file-earmark-plus-fill"></i> Add new shopinglist</a>
+<a th:href="@{/user/__${userId}__/lists/add}" class="btn btn-outline-success"><i class="bi bi-file-earmark-plus-fill"></i> Add new shopinglist</a>
 </div>
 </body>
 </html>

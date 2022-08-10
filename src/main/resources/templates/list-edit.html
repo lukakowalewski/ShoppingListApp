@@ -8,8 +8,9 @@
 </head>
 <body>
 <div class="container-sm text-center">
+    <a class="text-end" th:href="@{/logout}">Logout</a>
 <h2>Edit list</h2>
-<form method="post" th:action="@{/list/edit/__${id}__}" th:object="${list}" >
+<form method="post" th:action="@{/user/__${userId}__/lists/edit/__${id}__}" th:object="${list}" >
     <div class="input-group mt-3 mb-3 justify-content-center">
         <input type="hidden" th:field="*{id}">
         <span class="input-group-text">List name:</span>
@@ -17,7 +18,7 @@
     </div>
         <button type="submit" class="btn btn-success mb-3"><i class="bi bi-pencil-square"></i> Save list</button>
 </form>
-    <a th:href="@{/list/all}" class="btn btn-outline-primary"><i class="bi bi-box-arrow-in-left"></i> Return to lists</a>
+    <a th:href="@{/user/__${userId}__/lists/all}" class="btn btn-outline-primary"><i class="bi bi-box-arrow-in-left"></i> Return to lists</a>
 </div>
 </body>
 </html>

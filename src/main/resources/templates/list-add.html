@@ -8,8 +8,9 @@
 </head>
 <body>
 <div class="container-sm text-center">
-<h2>Add new list</h2>
-<form method="post" th:action="@{/list/add}" th:object="${emptyList}">
+    <a class="text-end" th:href="@{/logout}">Logout</a>
+<h1>Add new list</h1>
+<form method="post" th:action="@{/user/__${userId}__/lists/add}" th:object="${emptyList}">
             <div class="input-group mt-3 mb-3 justify-content-center">
                 <span class="input-group-text">List name:</span>
                 <input type="text" th:field="*{name}" class="" placeholder="Name...">
@@ -17,7 +18,7 @@
             <button type="submit" class="btn btn-success mb-3"><i class="bi bi-card-checklist"></i> Add list</button>
     </form>
 
-<a th:href="@{/list/all}" class="btn btn-outline-primary"><i class="bi bi-box-arrow-in-left"></i> Return to lists</a>
+<a th:href="@{/user/__${userId}__/lists/all}" class="btn btn-outline-primary"><i class="bi bi-box-arrow-in-left"></i> Return to lists</a>
 </div>
 </body>
 </html>

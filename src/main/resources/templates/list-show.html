@@ -8,72 +8,32 @@
 </head>
 <body>
 <div class="container text-center">
+  <a class="text-end" th:href="@{/logout}">Logout</a>
   <h1 th:text="${productList.name}"/>
   <div class="px-5 mx-5">
   <ul class="list-group text-center mx-5 px-5">
     <li class="list-group-item" th:each="product : ${productList.productList}" th:classappend="${product.isBought} ? 'list-group-item-dark'">
-      <div class="row align-content-center justify-content-center">
+      <div class="row justify-content-center">
       <div class="col-7">
       <p class="text-wrap text-break">
             <a th:text="${product.productName}"/>
             <a th:text="${product.quantity}"/>
             <a th:text="${product.unit}"/>
+      </p>
       </div>
         <div class="col-md-5">
-          <a th:href="@{/list/__${productList.id}__/product/incart/__${product.id}__}" th:text="${product.isBought} ? 'Take out' : 'Put in cart'" class="btn btn-primary btn-sm fw-bolder"><i class="bi bi-cart4"></i>Bought</a>
-        <a th:href="@{/list/__${productList.id}__/product/edit/__${product.id}__}" class="btn btn-outline-warning btn-sm" ><i class="bi bi-pencil-fill"></i>Edit product</a>
-        <a th:href="@{/list/__${productList.id}__/product/delete/__${product.id}__}"class="btn btn-outline-danger btn-sm"><i class="bi bi-trash"></i>Remove product</a>
-      </p>
+          <a th:href="@{/user/__${userId}__/lists/__${productList.id}__/product/incart/__${product.id}__}" th:text="${product.isBought} ? 'Take out' : 'Put in cart'" class="btn btn-primary btn-sm fw-bolder"><i class="bi bi-cart4"></i>Bought</a>
+        <a th:href="@{/user/__${userId}__/lists/__${productList.id}__/product/edit/__${product.id}__}" class="btn btn-outline-warning btn-sm" ><i class="bi bi-pencil-fill"></i>Edit product</a>
+        <a th:href="@{/user/__${userId}__/lists/__${productList.id}__/product/delete/__${product.id}__}"class="btn btn-outline-danger btn-sm"><i class="bi bi-trash"></i>Remove product</a>
       </div>
       </div>
     </li>
   </ul>
-  <a th:href="@{/list/{id}/product(id=${productList.id})}" class="btn btn-outline-success"><i class="bi bi-plus-circle-fill"></i> Add new product</a>
+  <a th:href="@{/user/__${userId}__/lists/__${productList.id}__/product}" class="btn btn-outline-success"><i class="bi bi-plus-circle-fill"></i> Add new product</a>
   <ul class="list-inline mt-3 mb-3">
-  <a th:href="@{/list/all}" class="btn btn-outline-primary"><i class="bi bi-box-arrow-in-left"></i> Return to lists</a>
+  <a th:href="@{/user/__${userId}__/lists/all}" class="btn btn-outline-primary"><i class="bi bi-box-arrow-in-left"></i> Return to lists</a>
   </ul>
   </div>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!--<table>-->
-<!--  <thead>-->
-<!--  <tr>-->
-<!--    <th>Name</th>-->
-<!--    <th>Quantity</th>-->
-<!--    <th>Unit</th>-->
-<!--    <th>Bought?</th>-->
-<!--  </tr>-->
-<!--  </thead>-->
-<!--  <tbody>-->
-<!--  <tr th:each="product : ${productList.productList}">-->
-<!--    <td th:text="${product.productName}"/>-->
-<!--    <td th:text="${product.quantity}"/>-->
-<!--    <td th:text="${product.unit}"/>-->
-<!--    <td th:text="${product.isBought} ? 'YES' : 'NO'"/>-->
-
-<!--    <td><a th:href="@{/list/__${productList.id}__/product/incart/__${product.id}__}">Change status</a></td>-->
-<!--    <td><a th:href="@{/list/__${productList.id}__/product/edit/__${product.id}__}">Edit product</a></td>-->
-<!--    <td><a th:href="@{/list/__${productList.id}__/product/delete/__${product.id}__}">Remove product</a></td>-->
-<!--  </tr>-->
-<!--  </tbody>-->
-<!--</table>-->
-
-<!--<a th:href="@{/list/{id}/product(id=${productList.id})}">Add new product</a>-->
-<!--<a th:href="@{/list/all}">Return to lists</a>-->
-
 </body>
 </html>

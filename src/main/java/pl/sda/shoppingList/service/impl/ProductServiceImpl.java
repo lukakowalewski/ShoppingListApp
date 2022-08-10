@@ -4,7 +4,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import pl.sda.shoppingList.dto.ProductDTO;
 import pl.sda.shoppingList.model.Product;
-import pl.sda.shoppingList.repository.ProductListRepository;
 import pl.sda.shoppingList.repository.ProductRepository;
 import pl.sda.shoppingList.service.ProductService;
 
@@ -13,11 +12,10 @@ import pl.sda.shoppingList.service.ProductService;
 public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
-    private final ProductListRepository productListRepository;
 
-    public ProductServiceImpl(ProductRepository productRepository, ProductListRepository productListRepository) {
+    public ProductServiceImpl(ProductRepository productRepository) {
         this.productRepository = productRepository;
-        this.productListRepository = productListRepository;
+
     }
 
     @Override

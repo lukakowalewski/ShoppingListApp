@@ -20,43 +20,48 @@ public class ProductController {
         this.productService = productService;
     }
 
-    @GetMapping("/list/{id}/product")
-    public String addProduct(@PathVariable Integer id, ModelMap modelMap) {
+    @GetMapping("/user/{userId}/lists/{id}/product")
+    public String addProduct(@PathVariable Integer userId, @PathVariable Integer id, ModelMap modelMap) {
         ProductDTO productDTO = new ProductDTO();
         modelMap.addAttribute("listId", id);
+        modelMap.addAttribute("userId", userId);
         modelMap.addAttribute("emptyProduct", productDTO);
         return "product-add";
     }
 
-    @PostMapping("/list/{id}/product")
-    public String saveProduct(@PathVariable Integer id, @ModelAttribute("emptyProduct") ProductDTO productDTO) {
+    @PostMapping("/user/{userId}/lists/{id}/product")
+    public String saveProduct(@PathVariable Integer userId ,@PathVariable Integer id, @ModelAttribute("emptyProduct") ProductDTO productDTO) {
+        log.info("Add new product: " + productDTO + " to list" + id);
         productService.addProduct(productDTO, id);
-        return "redirect:/list/" + id;
+        return "redirect:/user/{userId}/lists/{id}";
     }
 
-    @GetMapping("/list/{listId}/product/edit/{id}")
-    public String editProduct(@PathVariable Integer listId, @PathVariable Integer id, ModelMap modelMap) {
+    @GetMapping("/user/{userId}/lists/{listId}/product/edit/{id}")
+    public String editProduct(@PathVariable Integer userId ,@PathVariable Integer listId, @PathVariable Integer id, ModelMap modelMap) {
         modelMap.addAttribute("product", productService.getProductById(id));
         modelMap.addAttribute("listId", listId);
+        modelMap.addAttribute("userId", userId);
         return "product-edit";
     }
 
-    @PostMapping("/list/{listId}/product/edit/{id}")
-    public String updateProduct(@PathVariable Integer listId, @PathVariable Integer id, @ModelAttribute("product") ProductDTO productDTO) {
+    @PostMapping("/user/{userId}/lists/{listId}/product/edit/{id}")
+    public String updateProduct(@PathVariable Integer userId, @PathVariable Integer listId,  @ModelAttribute("product") ProductDTO productDTO) {
+        log.info("Edit product: " + productDTO);
         productService.updateProduct(productDTO);
-        return "redirect:/list/" + listId;
+        return "redirect:/user/{userId}/lists/{listId}";
     }
 
-    @GetMapping("/list/{listId}/product/incart/{id}")
-    public String changeProductStatus(@PathVariable Integer listId, @PathVariable Integer id) {
+    @GetMapping("/user/{userId}/lists/{listId}/product/incart/{id}")
+    public String changeProductStatus(@PathVariable Integer userId, @PathVariable Integer listId, @PathVariable Integer id) {
         productService.changeProductBoughtStatus(id);
-        return "redirect:/list/" + listId;
+        return "redirect:/user/{userId}/lists/{listId}";
     }
 
-    @GetMapping("/list/{listId}/product/delete/{id}")
-    public String editProduct(@PathVariable Integer listId, @PathVariable Integer id) {
+    @GetMapping("/user/{userId}/lists/{listId}/product/delete/{id}")
+    public String editProduct(@PathVariable Integer id) {
+        log.info("Remove product with id : " + id);
         productService.removeProduct(id);
-        return "redirect:/list/" + listId;
+        return "redirect:/user/{userId}/lists/{listId}";
 
     }
 }

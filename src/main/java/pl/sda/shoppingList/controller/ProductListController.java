@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import pl.sda.shoppingList.dto.ProductListDTO;
-import pl.sda.shoppingList.model.ProductList;
 import pl.sda.shoppingList.service.ProductListService;
 import pl.sda.shoppingList.service.impl.ProductListServiceImpl;
+
 
 @Slf4j
 @Controller
@@ -22,45 +22,51 @@ public class ProductListController {
         this.productListService = productListService;
     }
 
-    @GetMapping("/list/{id}")
-    public String showProductsList(@PathVariable Integer id, ModelMap modelMap) {
+    @GetMapping("/user/{userId}/lists/{id}")
+    public String showProductsList(@PathVariable Integer userId, @PathVariable Integer id, ModelMap modelMap) {
         modelMap.addAttribute("productList", productListService.getProductListById(id));
+        modelMap.addAttribute("userId", userId);
         return "list-show";
     }
 
-    @GetMapping("/list/add")
-    public String addList(ModelMap modelMap) {
+    @GetMapping("/user/{userId}/lists/add")
+    public String addList(@PathVariable Integer userId, ModelMap modelMap) {
         modelMap.addAttribute("emptyList", new ProductListDTO());
+        modelMap.addAttribute("userId", userId);
         return "list-add";
     }
 
-    @PostMapping("/list/add")
-    public String saveNewList(@ModelAttribute("emptyList") ProductListDTO productListDTO) {
-        productListService.add(productListDTO);
-        return "redirect:/list/all";
+    @PostMapping("/user/{userId}/lists/add")
+    public String saveNewList(@PathVariable Integer userId ,@ModelAttribute("emptyList") ProductListDTO productListDTO) {
+        log.info("Add new list: " + productListDTO + " to user with id: " + userId);
+        productListService.add(productListDTO, userId);
+        return "redirect:/user/{userId}/lists/all";
     }
 
-    @GetMapping("/list/edit/{id}")
-    public String editList(@PathVariable Integer id, ModelMap modelMap) {
+    @GetMapping("/user/{userId}/lists/edit/{id}")
+    public String editList(@PathVariable Integer userId ,@PathVariable Integer id, ModelMap modelMap) {
         modelMap.addAttribute("list", productListService.getProductListById(id));
+        modelMap.addAttribute("userId", userId);
         return "list-edit";
     }
 
-    @PostMapping("/list/edit/{id}")
+    @PostMapping("/user/{userId}/lists/edit/{id}")
     public String updateList(@ModelAttribute("list") ProductListDTO productListDTO) {
+        log.info("Edit list: "  + productListDTO);
         productListService.update(productListDTO);
-        return "redirect:/list/all";
+        return "redirect:/user/{userId}/lists/all";
     }
 
-    @GetMapping("/list/delete/{id}")
+    @GetMapping("/user/{userId}/lists/delete/{id}")
     public String deleteListById(@PathVariable Integer id) {
+        log.info("Remove list with id: " + id);
         productListService.remove(id);
-        return "redirect:/list/all";
+        return "redirect:/user/{userId}/lists/all";
     }
-
-    @GetMapping("/list/all")
-    public String showAllLists(ModelMap modelMap) {
-        modelMap.addAttribute("lists", productListService.getAllLists());
+    @GetMapping("/user/{userId}/lists/all")
+    public String showAllLists(@PathVariable Integer userId, ModelMap modelMap) {
+        modelMap.addAttribute("lists", productListService.findProductListsByUserId(userId));
+        modelMap.addAttribute("userId", userId);
         return "list-all";
     }
 
